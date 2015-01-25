@@ -1,0 +1,83 @@
+@(bindForm: Form[models.request.makeShift.ConditionRequest])
+
+@import helper._
+@import models.request.makeShift._
+@import helper.twitterBootstrap._
+
+@main("CutEW") {
+<div class="container">
+	
+	<div class="row">
+		<h1 class="">What is CutEW?</h1>
+		<p class="col-xs-12 col-sm-12 col-md-12 bg-info">
+		CutEW は条件を入力するだけで簡易なシフト表を作成できるアプリケーションです。<br/>
+		シフト表は Excel2007形式（.xlsx）で出力されます。
+		</p>
+	</div>
+
+	@form(action = routes.MakeShiftController.makeShift) {
+		<div class="row">
+			<h2 class="col-xs-12 col-sm-12 col-md-12 bg-info">	</h1>
+		</div>
+		<table class="table table-hover">
+		  <thead>
+		    <tr class="info">
+		      <th colspan="2">お店の条件を入力してください</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th>始業時間</th>
+		      <td>@(select (
+		      		 bindForm("startTimeHh")
+		      		,options(ConditionChoices.startTimeHh)))：
+		      		@(select (
+		      		 bindForm("startTimeMm")
+		      		,options(ConditionChoices.timeMm)))
+		      </td>
+		    </tr>
+		    <tr>
+		      <th>終業時間</th>
+		      <td>@(select (
+		      		 bindForm("endTimeHh")
+		      		,options(ConditionChoices.startTimeHh)))：
+		      		@(select (
+		      		 bindForm("endTimeMm")
+		      		,options(ConditionChoices.timeMm)))
+		      </td>
+		    </tr>
+		    <tr>
+		      <th>交替制</th>
+		      <td>@(inputRadioGroup (
+		      		 bindForm("shiftSystem")
+		      		,options("1"->"あり","0"->"なし")))
+		      </td>
+		    </tr>
+		    <tr>
+		      <th>休業日</th>
+		      <td>@(inputCheckboxGroup (
+		      		 bindForm("holidays")
+		      		,options(
+		      			 "0"->"日"
+		      			,"1"->"月"
+		      			,"2"->"火"
+		      			,"3"->"水"
+		      			,"4"->"木"
+		      			,"5"->"金"
+		      			,"6"->"土")))
+		      </td>
+		    </tr>
+		    <tr>
+		      <th>最低必要人員数</th>
+		      <td>@(inputText (
+		      		 bindForm("minRequiredMember")
+		      		,'size->5
+					))人
+		      </td>
+		    </tr>
+		  </tbody>
+		</table>
+	}
+
+</div>
+}

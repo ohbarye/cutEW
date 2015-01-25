@@ -1,0 +1,38 @@
+body {
+	margin-top: 50px;
+}
+
+@gray: #333;
+@min: 0.8em;
+
+.gray-min {
+		color: lighten(@gray, 30%);
+		font-size: @min;
+}
+
+.input-area {
+	height: 40px;
+}
+
+.tweet {
+	border-bottom: 1px solid #ccc;
+	padding: 0.5em 0em 0.5em 0.5em;
+	.content {
+		color: @gray
+	}
+	.userName {
+		font-size: @min;
+		font-weight: bold;		
+	}
+	.screenName, .created_at {
+		.gray-min;
+	}
+}
+
+
+.footer-content {
+	text-align: center;
+}
+.margin-bottom0 {
+	margin-bottom: 0px !important;
+}
