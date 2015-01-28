@@ -9,6 +9,7 @@ import utils.ConfigUtil;
 public class ConditionChoices {
 
 	public static List<String> stageNum = ConfigUtil.getList("stage.num").get();
+	public static List<String> skillLevel = ConfigUtil.getList("skill.level").get();
 	public static Map<String,String> shiftSystem = new HashMap<>();
 	static {
 		
