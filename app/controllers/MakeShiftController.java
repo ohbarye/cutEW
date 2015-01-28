@@ -21,8 +21,7 @@ public class MakeShiftController extends Controller {
 	 * @return
 	 */
     public static Result index() {
-    	Form<ConditionRequest> form = form(ConditionRequest.class);
-        return ok(views.html.makeShift.index.render(form));
+        return ok(views.html.makeShift.index.render(initializedForm()));
     }
 	
 	/**
@@ -31,9 +30,21 @@ public class MakeShiftController extends Controller {
 	 */
     public static Result makeShift() {
     	Form<ConditionRequest> form = form(ConditionRequest.class).bindFromRequest();
-//        return ok(views.html.makeShift.index.render(form));
-    	return TODO;
+    	if (!form.hasErrors()) {
+    		flash("success","帳票を出力します");
+    		return ok(views.html.makeShift.index.render(form));
+    	} else {
+    		flash("error","入力内容にエラーがあります");
+    		return ok(views.html.makeShift.index.render(form));
+    	}
     }
 	
+    private static Form<ConditionRequest> initializedForm() {
+    	ConditionRequest form = new ConditionRequest();
+    	form.openingTime = "09:00";
+    	form.closingTime = "18:00";
+    	form.shiftSystem = "1";
+    	return form(ConditionRequest.class).fill(form);
+    }
 	
 }

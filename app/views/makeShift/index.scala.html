@@ -14,7 +14,7 @@
 		シフト表は Excel2007形式（.xlsx）で出力されます。
 		</p>
 	</div>
-
+	
 	@form(action = routes.MakeShiftController.makeShift) {
 		<div class="row">
 			<h2 class="col-xs-12 col-sm-12 col-md-12 bg-info">	</h1>
@@ -28,29 +28,36 @@
 		  <tbody>
 		    <tr>
 		      <th>始業時間</th>
-		      <td>@(select (
-		      		 bindForm("startTimeHh")
-		      		,options(ConditionChoices.startTimeHh)))：
-		      		@(select (
-		      		 bindForm("startTimeMm")
-		      		,options(ConditionChoices.timeMm)))
+		      <td>@(inputText(
+					bindForm("openingTime")
+					,'type -> "time"
+					,'step -> 300
+					))
 		      </td>
 		    </tr>
 		    <tr>
 		      <th>終業時間</th>
-		      <td>@(select (
-		      		 bindForm("endTimeHh")
-		      		,options(ConditionChoices.startTimeHh)))：
-		      		@(select (
-		      		 bindForm("endTimeMm")
-		      		,options(ConditionChoices.timeMm)))
+		      <td>@(inputText(
+					bindForm("closingTime")
+					,'type -> "time"
+					,'step -> 300
+					))
 		      </td>
 		    </tr>
 		    <tr>
 		      <th>交替制</th>
 		      <td>@(inputRadioGroup (
 		      		 bindForm("shiftSystem")
-		      		,options("1"->"あり","0"->"なし")))
+		      		,options("1"->"あり","0"->"なし")
+		      		))
+		      </td>
+		    </tr>
+		    <tr id="shiftDetail">
+		      <th>シフト詳細</th>
+		      <td>@(select (
+		      		 bindForm("stageNum")
+		      		,options(ConditionChoices.stageNum)))交替制
+
 		      </td>
 		    </tr>
 		    <tr>
@@ -77,6 +84,8 @@
 		    </tr>
 		  </tbody>
 		</table>
+		
+		<input type="submit" class="btn btn-primary btn-lg">
 	}
 
 </div>

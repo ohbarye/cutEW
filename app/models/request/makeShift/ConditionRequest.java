@@ -1,18 +1,23 @@
 package models.request.makeShift;
 
 
+import java.util.List;
+
+import play.data.validation.Constraints.Required;
 import lombok.Data;
 
 @Data
 public class ConditionRequest {
 	
-	private String startTimeHh;
-	private String startTimeMm;
-	private String endTimeHh;
-	private String endTimeMm;
-	private String shiftSystem;
-	private String[] holidays;
-	private String minRequiredMember;
+	@Required
+	public String openingTime;
+	@Required
+	public String closingTime;
+	@Required
+	public String shiftSystem;
+	public List<String> holidays;
+	@Required
+	public String minRequiredMember;
 	
 	
 }
