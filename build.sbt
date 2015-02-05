@@ -14,7 +14,8 @@ libraryDependencies ++= Seq(
   "org.webjars" %% "webjars-play" % "2.3.0",
   "org.webjars" % "bootstrap" % "3.0.0",
   "org.projectlombok" % "lombok" % "1.14.8",  
-  "com.google.guava" % "guava" % "18.0"  
+  "com.google.guava" % "guava" % "18.0",  
+  "net.sf.jett" % "jett-core" % "0.9.0"
 )
 
 includeFilter in (Assets, LessKeys.less) := "*.less"

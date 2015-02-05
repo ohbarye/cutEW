@@ -95,7 +95,6 @@
 		    <tr>
 		      <th>シフト表イメージ</th>
 		      <td>
-	      		<input type="button" class="btn btn-default btn-sm" value="メンバー追加">
 				<table class="table table-striped table-bordered shift-image">
 				  <thead>
 				    <tr class="info">
@@ -109,16 +108,17 @@
 				  <tbody>
 				    <tr>
 				    	<th>
-				    	@(inputText(bindForm("name")))
+				    		@(inputText(bindForm("name"),'size->8))
 				    	</th>
 				    	<th>
 				    		@(select(bindForm("skillLevel")
 		      					,options(ConditionChoices.skillLevel)))
 		      			</th>
-				    	@for(i <- 1 to 31) {<td></td>}
+				    	@for(i <- 1 to 31) {<td class="calendar-cell"></td>}
 				    </tr>
 				  </tbody>
 				</table>
+	      		<input type="button" class="btn btn-default btn-sm add-member" value="メンバー追加">
 		      </td>
 		    </tr>
 		  </tbody>

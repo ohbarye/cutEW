@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.request.makeShift.ConditionChoices;
 import models.request.makeShift.ConditionRequest;
+import models.service.makeShift.MakeShiftService;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -32,13 +33,18 @@ public class MakeShiftController extends Controller {
     	Form<ConditionRequest> form = form(ConditionRequest.class).bindFromRequest();
     	if (!form.hasErrors()) {
     		flash("success","帳票を出力します");
-    		return ok(views.html.makeShift.index.render(form));
+    		return ok(MakeShiftService.makeShift());
+    		
     	} else {
     		flash("error","入力内容にエラーがあります");
     		return ok(views.html.makeShift.index.render(form));
     	}
     }
 	
+    /**
+     * 初期表示用にFormを初期化します。
+     * @return
+     */
     private static Form<ConditionRequest> initializedForm() {
     	ConditionRequest form = new ConditionRequest();
     	form.openingTime = "09:00";
