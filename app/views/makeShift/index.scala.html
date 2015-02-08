@@ -32,7 +32,7 @@
 					bindForm("openingTime")
 					,'type -> "time"
 					,'step -> 300
-					))
+					)(simpleInput, implicitly[Lang]))
 		      </td>
 		    </tr>
 		    <tr>
@@ -41,44 +41,30 @@
 					bindForm("closingTime")
 					,'type -> "time"
 					,'step -> 300
-					))
+					)(simpleInput, implicitly[Lang]))
 		      </td>
 		    </tr>
 		    <tr>
 		      <th>交替制</th>
-		      <td>@(inputRadioGroup (
+		      <td>@(inputRadioGroup(
 		      		 bindForm("shiftSystem")
 		      		,options("1"->"あり","0"->"なし")
-		      		))
+		      		)(simpleInput, implicitly[Lang]))
 		      </td>
 		    </tr>
 		    <tr id="shiftDetail">
 		      <th>シフト詳細</th>
-		      <td>@(select (
+		      <td>@(select(
 		      		 bindForm("stageNum")
-		      		,options(ConditionChoices.stageNum)))交替制
-		      </td>
-		    </tr>
-		    <tr>
-		      <th>休業日</th>
-		      <td>@(inputCheckboxGroup (
-		      		 bindForm("holidays")
-		      		,options(
-		      			 "0"->"日"
-		      			,"1"->"月"
-		      			,"2"->"火"
-		      			,"3"->"水"
-		      			,"4"->"木"
-		      			,"5"->"金"
-		      			,"6"->"土")))
+		      		,options(ConditionChoices.stageNum))(simpleInput, implicitly[Lang]))交替制
 		      </td>
 		    </tr>
 		    <tr>
 		      <th>最低必要人員数</th>
-		      <td>@(inputText (
+		      <td>@(inputText(
 		      		 bindForm("minRequiredMember")
 		      		,'size->5
-					))人
+					)(simpleInput, implicitly[Lang]))人
 		      </td>
 		    </tr>
 		  </tbody>
@@ -99,23 +85,28 @@
 				  <thead>
 				    <tr class="info">
 				    	<th>メンバー名</th>
-				    	<th>スキル</th>
 				    	@for(i <- 1 to 31) {
-				    		<th>@i</th>
+				    		<th class="day@i">@i</th>
 				    	}
 				    </tr>
 				  </thead>
-				  <tbody>
-				    <tr>
-				    	<th>
-				    		@(inputText(bindForm("name"),'size->8))
-				    	</th>
-				    	<th>
-				    		@(select(bindForm("skillLevel")
-		      					,options(ConditionChoices.skillLevel)))
-		      			</th>
-				    	@for(i <- 1 to 31) {<td class="calendar-cell"></td>}
-				    </tr>
+				  <tbody class="employees">
+			    	@for(empNum <- 0 to 14) {
+					    <tr class="employee_@empNum">
+					    	<th>
+					    		@*メンバー名*@
+					    		@{inputText(bindForm("employees["+empNum+"].name"),'size->8)(simpleInput, implicitly[Lang])}
+					    		<input type="hidden" name="employees[@empNum].desirableHolidays")
+					    	</th>
+					    	@for(i <- 1 to 31) {
+					    		<td class="calendar-cell day@i">
+						    		@{checkbox(bindForm("employees["+empNum+"].desirableHolidays[]"),'value->i)
+						    			(simpleInput, implicitly[Lang])}
+						    		<span class="holiday_symbol" style="visibility:hidden">休</span>
+					    		</td>
+					    	}
+					    </tr>
+					}
 				  </tbody>
 				</table>
 	      		<input type="button" class="btn btn-default btn-sm add-member" value="メンバー追加">

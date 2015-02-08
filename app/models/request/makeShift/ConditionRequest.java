@@ -5,6 +5,7 @@ import java.util.List;
 
 import play.data.validation.Constraints.Required;
 import lombok.Data;
+import models.entity.Employee;
 
 @Data
 public class ConditionRequest {
@@ -15,9 +16,9 @@ public class ConditionRequest {
 	public String closingTime;
 	@Required
 	public String shiftSystem;
-	public List<String> holidays;
 	@Required
 	public String minRequiredMember;
-	
+
+	public List<Employee> employees;
 	
 }
