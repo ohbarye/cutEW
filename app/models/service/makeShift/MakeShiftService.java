@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import models.entity.Employee;
+import models.request.makeShift.ConditionRequest;
 import net.sf.jett.transform.ExcelTransformer;
 
 /**
@@ -23,38 +24,52 @@ import net.sf.jett.transform.ExcelTransformer;
  * @author ohbarye
  */
 public class MakeShiftService {
+	
+	/** シフト表テンプレートのパス */
+	private static final String templatePath = "resources/shift_template.xlsx";
+	/** シフト表出力先 */
+	private static final String outPath = "resources/shift.xlsx";
 
-	public static File makeShift() {
-		System.out.println(System.getProperty("user.dir"));
-		
-		List<Employee> employees = Lists.newArrayList();
-		
-		Map<String, Object> beans = Maps.newHashMap();
-		Employee emp = new Employee();
-		emp.name = "レミ";
-		emp.skillLevel = "一人前";
-		
-		employees.add(emp);
-		
-		beans.put("employees", employees);
-		
-		String inPath  = "resources/shift_template.xlsx";
-		String outPath = "resources/shift.xlsx";
+	/**
+	 * 帳票作成処理
+	 * @param condition
+	 * @return
+	 */
+	public static File makeShift(ConditionRequest condition) {
 		
 		try (FileOutputStream fileOut = new FileOutputStream(outPath);
-			 InputStream fileIn       = new BufferedInputStream(new FileInputStream(inPath))) {
+			 InputStream fileIn       = new BufferedInputStream(new FileInputStream(templatePath))) {
 
 			ExcelTransformer transformer = new ExcelTransformer();
-			Workbook workbook = transformer.transform(fileIn, beans);
+			Workbook workbook = transformer.transform(fileIn, createParams(condition));
 			workbook.write(fileOut);
 			fileOut.close();
 			
 		} catch (IOException e) {
-			System.err.println("IOException reading " + inPath + ": " + e.getMessage());
+			e.printStackTrace();
+			// TODO
 		} catch (InvalidFormatException e) {
-			System.err.println("InvalidFormatException reading " + inPath + ": " + e.getMessage());
+			e.printStackTrace();
+			// TODO
 		}
 		
-		return new File(outPath);		
+		return new File(outPath);
+	}
+	
+	/**
+	 * 帳票テンプレートに渡すパラメータを作成する
+	 * @param condition
+	 * @return
+	 */
+	private static Map<String, Object> createParams(ConditionRequest condition) {
+		
+		Map<String, Object> params = Maps.newHashMap();
+
+		List<Employee> employees = condition.employees;
+		params.put("employees", employees);
+		params.put("openingTime", condition.openingTime);
+		params.put("closingTime", condition.closingTime);
+		
+		return params;
 	}
 }

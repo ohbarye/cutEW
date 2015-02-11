@@ -1,14 +1,12 @@
 package controllers;
 
-import java.util.List;
 
-import models.request.makeShift.ConditionChoices;
 import models.request.makeShift.ConditionRequest;
 import models.service.makeShift.MakeShiftService;
+import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import utils.ConfigUtil;
 import static play.data.Form.*;
 
 /**
@@ -31,9 +29,11 @@ public class MakeShiftController extends Controller {
 	 */
     public static Result makeShift() {
     	Form<ConditionRequest> form = form(ConditionRequest.class).bindFromRequest();
+
     	if (!form.hasErrors()) {
-    		flash("success","帳票を出力します");
-    		return ok(MakeShiftService.makeShift());
+    		Logger.info("帳票を出力します");
+    		// 出力条件から帳票を作成する
+    		return ok(MakeShiftService.makeShift(form.get()));
     		
     	} else {
     		flash("error","入力内容にエラーがあります");

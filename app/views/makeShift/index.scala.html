@@ -92,17 +92,15 @@
 				  </thead>
 				  <tbody class="employees">
 			    	@for(empNum <- 0 to 14) {
-					    <tr class="employee_@empNum">
+						    <tr class="employee_@empNum @if(empNum!=0){hide}">
 					    	<th>
-					    		@*メンバー名*@
 					    		@{inputText(bindForm("employees["+empNum+"].name"),'size->8)(simpleInput, implicitly[Lang])}
 					    		<input type="hidden" name="employees[@empNum].desirableHolidays")
 					    	</th>
 					    	@for(i <- 1 to 31) {
 					    		<td class="calendar-cell day@i">
-						    		@{checkbox(bindForm("employees["+empNum+"].desirableHolidays[]"),'value->i)
-						    			(simpleInput, implicitly[Lang])}
 						    		<span class="holiday_symbol" style="visibility:hidden">休</span>
+						    		@{checkbox(bindForm("employees["+empNum+"].desirableHolidays[]"),'value->i,'class->"hide")(simpleInput, implicitly[Lang])}
 					    		</td>
 					    	}
 					    </tr>

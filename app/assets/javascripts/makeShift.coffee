@@ -11,19 +11,8 @@ $ ->
 
 	# メンバーの行を追加する
 	$('.add-member').click ->
-		# コピーする行を取得
-		lastEmployee = $('.employees tr:last-child')
-		# 新しい行のindexを作成
-		oldIndex = parseInt(lastEmployee.attr('class').match(/[0-9]/)) 
-		newIndex = oldIndex + 1
-		# 行のクラス名のindexを付与する
-		newRowClassName = 'employee_'+newIndex
-		newEmployee = lastEmployee.clone(true).attr('class',newRowClassName)
-		# 新しい行を追加する
-		(newEmployee).appendTo('.employees')
-		$(".#{newRowClassName} input[name='employees[#{oldIndex}].name']")
-			.attr('id',"employees_#{newIndex}_name")
-			.attr('name',"employees[#{newIndex}].name")
+		hiddenRow = $('.employees tr.hide:first')
+		hiddenRow.removeClass("hide")
 		
 		
 	@
